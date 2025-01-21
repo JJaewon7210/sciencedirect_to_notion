@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.venv
+ENV/
+venv/
+
+# Logs
+*.log
+logs/
+
+# Virtual environment
+pip-log.txt
+develop-eggs/
+dist/
+downloads/
+.eggs/
+build/
+*.egg-info/
+.installed.cfg
+*.egg
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Output Folders
+/data/scrap/
+/data/summary/
+
+# VSCode Settings
+.vscode/
+
+# Python Bytecode
+*.pyc

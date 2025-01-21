@@ -1,0 +1,24 @@
+yonsei_username: # 연세대 포탈 학번 (예: 2022312196)
+yonsei_password: # 연세대 포탈 비밀번호 (예: qwerty123456)
+
+elsevier_apikey: # Elsevier에서 발급받은 API 토큰 (예: 26476a9999a999aaa9a9000db26ea048)
+
+elsevier_query: > # Scopus 고급검색용 쿼리 'https://www.scopus.com/search/form.uri?display=advanced' (현재는 ScienceDirect에 올라온 저널만 가능)
+  TITLE-ABS-KEY("digital twin" AND construct*)
+  AND PUBYEAR > 2021
+  AND DOCTYPE(ar)
+  AND SUBJAREA(engi)
+  AND LANGUAGE(english)
+  AND (SRCTITLE("Automation in Construction") OR SRCTITLE("Journal of Building Engineering") OR SRCTITLE("Advanced Engineering Informatics") OR SRCTITLE("Tunnelling and Underground Space Technology"))
+
+chrome_user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 # Chrome 브라우저의 User-Agent
+scrap_output_folder: data/scrap/250121_digital_twin # 스크랩 결과를 저장할 폴더 (예: data/scrap/250121_digital_twin)
+
+gemini_apikey: # Gemini 사용을 위한 Google API 키 (예: AIzaSyB69_esTRb9999999999mXXXXXXXXXXIXw)
+gemini_model: gemini-2.0-flash-exp # Gemini 모델명 (기본값: gemini-2.0-flash-exp)
+gemini_output_folder: data/summary/250121_digital_twin # 요약 결과를 저장할 폴더 (예: data/summary/250121_digital_twin)
+
+notion_api_token: # Notion API 토큰 (예: ntn_m12345678908G5GUhe6HeyhFY6bAlCiN37SyrjpTJXn9NC)
+parent_page_id: # 새 페이지를 생성할 부모 페이지 ID (예: 노션 URL에서 추출 가능, https://www.notion.so/TEST-181103b46f1d80ea8b1bc6a2e7eb2b04?pvs=4 에서 181103b46f1d80ea8b1bc6a2e7eb2b04 부분.)
+database_id: "" # 데이터를 작성할 database_id (기본값: "" 새로 데이터베이스를 만들 경우 빈 문자열로 둡니다)
+new_database_title: 250121 디지털 트윈 # 생성할 데이터베이스 제목 (예: 250121 디지털 트윈)
