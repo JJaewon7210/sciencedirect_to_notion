@@ -3,10 +3,14 @@
 이 저장소는 다음과 같은 순서의 파이프라인을 통해 작동합니다:
 
 1. **ScienceDirect**에서 연세대학교 도서관을 통해 **논문 내용**을 수집 .
-2. **Google Generative AI (Gemini)**를 사용해 **구조화된 요약** 생성 .
+2. **Gemini**를 사용해 **구조화된 요약** 생성 .
 3. **Notion**에 해당 요약을 **포맷된 페이지**로 업로드 .
 
 모든 설정값과 자격 정보는 `config.yaml` 파일에 저장되어 있습니다. ⚙️
+
+![image](https://github.com/user-attachments/assets/cd107334-cbdd-4295-ab9b-79599716a972)
+![image](https://github.com/user-attachments/assets/07e2eef1-d6ac-4df8-a9c7-d73a3a84b895)
+
 
 ---
 
@@ -61,8 +65,8 @@ Chrome 브라우저를 사용하며, 다른 브라우저를 사용할 경우 코
 
 `config.yaml` 파일에는 사용자별 자격 정보와 검색 조건, 경로가 정의되어 있습니다. 주요 항목은 아래와 같습니다:
 
-⚠️ 현재 ScienceDirect에 등재된 저널에만 작동하도록 처리하였습니다. 
-⚠️ **elsevier_query**에서 꼭 cienceDirect에 등재된 저널만 포함되도록 SRCTITLE을 설정해주세요!
+- ⚠️ 현재 ScienceDirect에 등재된 저널에만 작동하도록 처리하였습니다. 
+- ⚠️ **elsevier_query**에서 꼭 cienceDirect에 등재된 저널만 포함되도록 SRCTITLE을 설정해주세요!
 
 ```yaml
 yonsei_username: # 연세대 포탈 계정 🆔
