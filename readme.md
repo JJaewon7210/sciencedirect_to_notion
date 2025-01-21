@@ -7,11 +7,11 @@ Scopus Advanced Query에서 나타난 결과를 하나하나 리뷰하기 힘드
 
 1. **ScienceDirect**에서 **논문 내용**을 수집. 
 2. **Gemini**를 사용해 **구조화된 요약** 생성.
-3. **Notion**에 해당 요약을 **포맷된 페이지**로 업로드.
+3. **Notion**에 해당 요약을 **데이터베이스**로 업로드.
 
-모든 설정값과 자격 정보는 `config.yaml` 파일에 저장되어 있습니다. ⚙️
 
 최종적으로 노션에 나타난 결과는 아래와 같습니다 :)
+
 ![image](https://github.com/user-attachments/assets/dc0893fc-1c27-4b66-a80c-a19d9ff7be03)
 
 
@@ -33,7 +33,8 @@ Scopus Advanced Query에서 나타난 결과를 하나하나 리뷰하기 힘드
 ```
 
 - **`script/scrap.py`** ️
-    - `elsapy`를 이용해 Elsevier Scopus 검색 결과를 받아오고, Selenium을 통해 연세대 도서관에 로그인 후 ScienceDirect에 접속해 논문을 수집합니다. ️
+    - `elsapy`를 이용해 Elsevier Scopus 검색 결과를 받아오고, Selenium을 통해 연세대 도서관에 로그인 후 ScienceDirect에 접속해 논문을 수집합니다.
+    - 연세대 도서관 로그인을 통해 작동하기 때문에, 학교 IP가 아니여도 작동합니다.
     - 수집한 내용은 `.txt` 파일로 저장됩니다. 
 
 - **`script/gemini.py`** 
@@ -96,7 +97,7 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
 - ⚠️ 최초 실행 시에는 `database_id`를 ""으로 설정해주세요!
 - `database_id`가 비어 있으면 `parent_page_id` 아래에 새 데이터베이스가 생성됩니다. ➕
 - 이미 Notion 데이터베이스가 있다면 해당 ID를 넣고 사용합니다. ️
-- `parent_page_id` 확인하는 법은 아래 사진을 참고해 주세요!
+- `parent_page_id` 을 노션에서 확인하는 법은 사진을 참고해 주세요.
 
 
 ![image](https://github.com/user-attachments/assets/62934490-dcd0-48e1-bfe8-05ea245e0b97)
@@ -113,10 +114,7 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
     - 연세대 포탈 계정, Elsevier API 키, Google Generative AI 키, Notion 토큰 등을 실제 값으로 기입합니다. 
     - 수집 결과 폴더(`scrap_output_folder`), 요약 결과 폴더(`gemini_output_folder`) 등을 원하는 경로로 설정합니다. 
 
-3. **`prompt.py` 수정** 
-    - Gemini를 이용해서 어떤 정보를 추출할지 prompt를 작성합니다. 
-
-4. **수집(`scrap.py`) 실행** ️
+3. **수집(`scrap.py`) 실행** ️
 
     ```bash
     python script/scrap.py
@@ -125,11 +123,15 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
     - 연세대 도서관 로그인 후 Scopus 검색 결과를 바탕으로 ScienceDirect에서 논문 HTML을 가져옵니다. ️
     - 가져온 내용을 `.txt`로 저장합니다. 
 
-5. **수집 결과 확인** 
+4. **수집 결과 확인** 
     - 몇몇 논문들은 수집이 불완전하게 될 수 있습니다. ⚠️
     - 크기 순으로 파일을 정렬한 다음 직접 내용을 붙여넣을 수 있습니다. ✂️
 
-6. **요약(`gemini.py`) 실행** 
+5. **`prompt.py` 및 `notion.py`수정** 
+    - Gemini를 이용해서 어떤 정보를 추출할지 prompt를 수정합니다.
+    - 만약, Prompt을 수정했다면, 이에 맞춰서 notion.py에서 정의된 데이터베이스의 properties도 수정이 필요합니다.
+
+5. **요약(`gemini.py`) 실행** 
 
     ```bash
     python script/gemini.py
