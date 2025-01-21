@@ -1,15 +1,16 @@
-yonsei_username: # 연세대 포탈 학번 (예: 2022312196)
+yonsei_username: # 연세대 포탈 학번 (예: 2012345678)
 yonsei_password: # 연세대 포탈 비밀번호 (예: qwerty123456)
 
 elsevier_apikey: # Elsevier에서 발급받은 API 토큰 (예: 26476a9999a999aaa9a9000db26ea048)
 
-elsevier_query: > # Scopus 고급검색용 쿼리 'https://www.scopus.com/search/form.uri?display=advanced' (현재는 ScienceDirect에 올라온 저널만 가능)
+elsevier_query: > # Scopus 고급검색용 쿼리 'https://www.scopus.com/search/form.uri?display=advanced' 
   TITLE-ABS-KEY("digital twin" AND construct*)
   AND PUBYEAR > 2021
   AND DOCTYPE(ar)
   AND SUBJAREA(engi)
   AND LANGUAGE(english)
-  AND (SRCTITLE("Automation in Construction") OR SRCTITLE("Journal of Building Engineering") OR SRCTITLE("Advanced Engineering Informatics") OR SRCTITLE("Tunnelling and Underground Space Technology"))
+  AND (SRCTITLE("Automation in Construction") OR SRCTITLE("Journal of Building Engineering") OR SRCTITLE("Advanced Engineering Informatics") OR SRCTITLE("Tunnelling and Underground Space Technology")) 
+# (현재는 ScienceDirect에 올라온 저널만 가능! 꼭 SRCTITLE을 설정해주세요!)
 
 chrome_user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 # Chrome 브라우저의 User-Agent
 scrap_output_folder: data/scrap/250121_digital_twin # 스크랩 결과를 저장할 폴더 (예: data/scrap/250121_digital_twin)
