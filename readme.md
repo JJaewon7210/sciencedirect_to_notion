@@ -67,10 +67,8 @@ Chrome 브라우저를 사용하며, 다른 브라우저를 사용할 경우 코
 
 ## 설정 (`config.yaml`) ⚙️
 
-`config.yaml` 파일에는 사용자별 자격 정보와 검색 조건, 경로가 정의되어 있습니다. 주요 항목은 아래와 같습니다:
+`config.yaml` 파일에는 사용자별 자격 정보와 검색 조건, 경로가 정의되어 있습니다.
 
-- ⚠️ 현재 ScienceDirect에 등재된 저널에만 작동하도록 처리하였습니다. 
-- ⚠️ **elsevier_query**에서 꼭 cienceDirect에 등재된 저널만 포함되도록 SRCTITLE을 설정해주세요!
 
 ```yaml
 yonsei_username: # 연세대 포탈 계정 🆔
@@ -93,11 +91,11 @@ parent_page_id: # 새 데이터베이스 생성 시 부모 페이지의 ID 🆔
 database_id: "" # 기존 DB 사용 시 ID 기입, 없으면 자동 생성 ️
 new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
 ```
-
-- ⚠️ 최초 실행 시에는 `database_id`를 ""으로 설정해주세요!
+- **elsevier_query**에서 꼭 ScienceDirect에 등재된 저널만 포함되도록 SRCTITLE을 설정해야합니다. ⚠️ 
+- 최초 실행 시에는 `database_id`를 ""으로 설정해야합니다. ⚠️ 
 - `database_id`가 비어 있으면 `parent_page_id` 아래에 새 데이터베이스가 생성됩니다. ➕
 - 이미 Notion 데이터베이스가 있다면 해당 ID를 넣고 사용합니다. ️
-- `parent_page_id` 을 노션에서 확인하는 법은 사진을 참고해 주세요.
+- `parent_page_id` 을 노션에서 확인하는 법은 사진을 참고바랍니다.
 
 
 ![image](https://github.com/user-attachments/assets/62934490-dcd0-48e1-bfe8-05ea245e0b97)
