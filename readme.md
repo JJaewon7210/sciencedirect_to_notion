@@ -1,15 +1,16 @@
 ## 개요 ✨
-
+Scopus Advanced Query에서 나타난 결과를 하나하나 리뷰하기 힘드셨나요?
+이제 Gemini(무료)를 이용해서 빠르게 논문을 리뷰하고 인사이트를 얻어보세요!
 이 저장소는 다음과 같은 순서의 파이프라인을 통해 작동합니다:
 
-1. **ScienceDirect**에서 연세대학교 도서관을 통해 **논문 내용**을 수집 .
-2. **Gemini**를 사용해 **구조화된 요약** 생성 .
-3. **Notion**에 해당 요약을 **포맷된 페이지**로 업로드 .
+1. **ScienceDirect**에서 **논문 내용**을 수집. 
+2. **Gemini**를 사용해 **구조화된 요약** 생성.
+3. **Notion**에 해당 요약을 **포맷된 페이지**로 업로드.
 
 모든 설정값과 자격 정보는 `config.yaml` 파일에 저장되어 있습니다. ⚙️
 
-![image](https://github.com/user-attachments/assets/cd107334-cbdd-4295-ab9b-79599716a972)
-![image](https://github.com/user-attachments/assets/07e2eef1-d6ac-4df8-a9c7-d73a3a84b895)
+최종적으로 노션에 나타난 결과는 아래와 같습니다 :)
+![image](https://github.com/user-attachments/assets/dc0893fc-1c27-4b66-a80c-a19d9ff7be03)
 
 
 ---
@@ -93,6 +94,8 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
 - ⚠️ 최초 실행 시에는 `database_id`를 ""으로 설정해주세요!
 - `database_id`가 비어 있으면 `parent_page_id` 아래에 새 데이터베이스가 생성됩니다. ➕
 - 이미 Notion 데이터베이스가 있다면 해당 ID를 넣고 사용합니다. ️
+- `parent_page_id` 확인하는 법은 아래 사진을 참고해 주세요!
+![image](https://github.com/user-attachments/assets/62934490-dcd0-48e1-bfe8-05ea245e0b97)
 
 ---
 
