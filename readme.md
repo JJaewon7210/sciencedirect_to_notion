@@ -114,7 +114,7 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
     - 연세대 포탈 계정, Elsevier API 키, Google Generative AI 키, Notion 토큰 등을 실제 값으로 기입합니다. 
     - 수집 결과 폴더(`scrap_output_folder`), 요약 결과 폴더(`gemini_output_folder`) 등을 원하는 경로로 설정합니다. 
 
-3. **수집(`scrap.py`) 실행** ️
+3. **`scrap.py` 실행** ️
 
     ```bash
     python script/scrap.py
@@ -131,7 +131,7 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
     - Gemini를 이용해서 어떤 정보를 추출할지 prompt를 수정합니다.
     - 만약, Prompt을 수정했다면, 이에 맞춰서 notion.py에서 정의된 데이터베이스의 properties도 수정이 필요합니다.
 
-5. **요약(`gemini.py`) 실행** 
+5. **`gemini.py` 실행** 
 
     ```bash
     python script/gemini.py
@@ -139,7 +139,7 @@ new_database_title: "250121 디지털 트윈" # 새 DB 생성 시 제목 ️
 
     - 수집된 `.txt`를 읽어, Gemini 모델에 요약을 요청하고, 구조화된 JSON 형태로 결과를 저장합니다. ️
 
-7. **Notion 업로드(`notion.py`) 실행** ️
+7. **`notion.py` 실행** ️
 
     ```bash
     python script/notion.py
