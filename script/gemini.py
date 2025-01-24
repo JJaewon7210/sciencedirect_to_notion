@@ -2,7 +2,7 @@ import os
 import time
 import google.generativeai as genai
 from scrap import load_config
-from prompt import construct_prompt, construct_response_schema
+from prompt import construct_prompt, construct_response_schema, construct_system_instruction
 from collections import deque
 
 MAX_LEN = 10
@@ -50,6 +50,7 @@ def rate_limited_generate_summary(model, prompt, call_queue):
                 print(f"Waiting for {wait_time:.2f} seconds to respect RPM limit.")
                 time.sleep(wait_time)
     start_time = time.time()
+    ## GET GEMINI RESPONSE ##
     response = model.generate_content(
         prompt,
         generation_config=genai.GenerationConfig(
@@ -64,7 +65,7 @@ def main():
     # Load configuration
     config = load_config("config.yaml")
     genai.configure(api_key=config['gemini_apikey'])
-    model = genai.GenerativeModel(config['gemini_model'])
+    model = genai.GenerativeModel(config['gemini_model'], system_instruction=construct_system_instruction())
     
     # Specify the output folders
     scrap_output_folder = config.get("scrap_output_folder", None)
