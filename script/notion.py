@@ -13,12 +13,36 @@ class NotionJSONUploader:
             "paragraph", "heading_1", "heading_2", "heading_3",
             "bulleted_list_item", "numbered_list_item"
         }
+        self.MAX_BLOCKS_PER_REQUEST = 100
         
         if database_id:
             self._debug_print(f"Using existing database with ID: {database_id}")
         else:
             self._debug_print("No database ID provided, will create a new database")
 
+    def _chunk_blocks(self, blocks, max_size=100):
+        """Split blocks into chunks that respect Notion's block limit."""
+        chunks = []
+        current_chunk = []
+        current_size = 0
+
+        for block in blocks:
+            # If adding this block would exceed the limit, start a new chunk
+            if current_size + 1 > max_size:
+                chunks.append(current_chunk)
+                current_chunk = []
+                current_size = 0
+            
+            current_chunk.append(block)
+            current_size += 1
+
+        # Add the last chunk if it's not empty
+        if current_chunk:
+            chunks.append(current_chunk)
+
+        return chunks
+    
+    
     def create_new_database(self, parent_page_id, database_title):
         """Creates a new database with the updated schema"""
         new_database = self.notion.databases.create(
@@ -119,8 +143,10 @@ class NotionJSONUploader:
 
         # Handle Journal
         if json_data.get("Journal"):
+            # Remove or replace commas
+            journal_clean = json_data["Journal"].replace(",", " ")
             properties["Journal"] = {
-                "select": {"name": str(json_data["Journal"]).strip()}
+                "select": {"name": journal_clean.strip()}
             }
 
         # Handle Publication Date
@@ -130,10 +156,16 @@ class NotionJSONUploader:
 
         # Handle Keywords
         if json_data.get("Keywords"):
-            valid_keywords = [kw for kw in json_data["Keywords"] if kw]
+            valid_keywords = []
+            for kw in json_data["Keywords"]:
+                # Split each keyword on commas and strip whitespace
+                for sub_kw in kw.split(","):
+                    sub_kw_clean = sub_kw.strip()
+                    if sub_kw_clean:
+                        valid_keywords.append(sub_kw_clean)
             if valid_keywords:
                 properties["Keywords"] = {
-                    "multi_select": [{"name": str(kw).strip()} for kw in valid_keywords]
+                    "multi_select": [{"name": kw} for kw in valid_keywords]
                 }
 
         # Handle DOI/URL
@@ -152,7 +184,7 @@ class NotionJSONUploader:
             
 
         # Handle Objective
-        if obj := json_data.get("Objective"):
+        if rg := json_data.get("Objective"):
             if isinstance(rg, str):
                 content = rg
             else:  # Assume a list of strings
@@ -191,8 +223,8 @@ class NotionJSONUploader:
                 "rich_text": [{"type": "text", "text": {"content": content}}]
             }
 
-        # Process remaining content sections
-        children = []
+        # Process content sections
+        all_blocks = []
         sections = [
             ("Abstract", json_data.get("Abstract")),
             ("1. Research Gap and Problem Statement", json_data.get("Research Gap Or Problem Statement")),
@@ -205,19 +237,33 @@ class NotionJSONUploader:
         for section_title, section_data in sections:
             if section_data:
                 if header := self._create_header(section_title, 2):
-                    children.append(header)
+                    all_blocks.append(header)
                     processed_blocks = self._process_nested(section_data, 3)
-                    children.extend(b for b in processed_blocks if self._validate_block(b))
+                    all_blocks.extend(b for b in processed_blocks if self._validate_block(b))
 
-        if not children:
+        if not all_blocks:
             self._debug_print("No content blocks created")
+            return None
 
+        # Create the initial page with the first chunk of blocks
+        block_chunks = self._chunk_blocks(all_blocks, self.MAX_BLOCKS_PER_REQUEST)
+        
+        # Create initial page with first chunk
         page = self.notion.pages.create(
             parent={"database_id": self.database_id},
             properties=properties,
-            children=children
+            children=block_chunks[0] if block_chunks else []
         )
-        return page["id"]
+        page_id = page["id"]
+
+        # Append remaining chunks using the append_block_children endpoint
+        for chunk in block_chunks[1:]:
+            self.notion.blocks.children.append(
+                block_id=page_id,
+                children=chunk
+            )
+
+        return page_id
 
 def main():
     config = load_config("config.yaml")
@@ -235,10 +281,13 @@ def main():
     for file in os.listdir(gemini_output_folder):
         if not file.endswith(".json"):
             continue
-        with open(os.path.join(gemini_output_folder, file), 'r', encoding='utf-8') as f:
-            json_data = json.load(f)
-            page_id = uploader.create_page(json_data)
-            print(f"Successfully created page: {page_id}" if page_id else "Failed to create page")
+        try:
+            with open(os.path.join(gemini_output_folder, file), 'r', encoding='utf-8') as f:
+                json_data = json.load(f)
+                page_id = uploader.create_page(json_data)
+                print(f"Successfully created page: {page_id}" if page_id else "Failed to create page")
+        except:
+            print(f"Error processing file: {file}")
 
 if __name__ == "__main__":
     main()
