@@ -111,18 +111,6 @@ def construct_prompt(article_content):
         "- 한계점 및 향후 연구 (Limitations and Future Research):\n"
             "    - Point out any unresolved issues or limitations in the current study.\n"
             "    - Propose potential future research directions, including improvements in methodology, broader dataset applications, or exploring new research questions.\n"
-        "## 13. 디지털 트윈(Digital Twin)\n\n"
-        "- 시스템 아키텍처 (System Architecture):\n"
-            "    - Physical-digital connection method\n"
-            "    - Real-time synchronization mechanism (if existed)\n\n"
-        "- 기술 스택 (Core Technology Stack):\n"
-            "    - 3D modeling tools (if existed)\n"
-            "    - AI/ML models (if existed)\n\n"
-        "- 적용 사례 (Implementation Case Study):\n"
-            "    - Target equipment specifications (e.g., KUKA KR 1000 Titan industrial robot arm)\n"
-            "    - Performance improvement metrics (e.g., fault prediction accuracy improved from 92% to 97% with 3σ confidence)\n\n"
-        
-        
     )
     return prompt
 
@@ -143,7 +131,6 @@ def construct_response_schema():
             "Experiment",
             "Results And Discussions",
             "Contribution",
-            "Digital Twin"
         ],
         "properties": {
             "Title": {"type": "STRING"},
@@ -229,20 +216,5 @@ def construct_response_schema():
                     "Limitations And Future Research": {"type": "ARRAY", "items": {"type": "STRING"}},
                 },
             },
-            "Digital Twin": {
-                "type": "OBJECT",
-                "required": [
-                    "System Architecture",
-                    "Core Technology Stack",
-                    "Implementation Case Study",
-
-                ],
-                "properties": {
-                    "System Architecture": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "Core Technology Stack": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "Implementation Case Study": {"type": "ARRAY", "items": {"type": "STRING"}
-                },
-            },
         }
-    }
     }
