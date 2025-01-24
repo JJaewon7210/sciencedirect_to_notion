@@ -218,3 +218,7 @@ def construct_response_schema():
             },
         }
     }
+
+
+def construct_system_instruction():
+    return """You are a research assistant tasked with summarizing academic articles. Your goal is to extract key information from the articles and present it in a structured format."""
