@@ -5,6 +5,8 @@ from scrap import load_config
 from prompt import construct_prompt, construct_response_schema
 from collections import deque
 
+MAX_LEN = 10
+
 def save_json(file_path, content):
     with open(file_path, "w", encoding='utf-8') as file:
         file.write(content)
@@ -35,16 +37,16 @@ def rate_limited_generate_summary(model, prompt, call_queue):
     :return: The generated summary text.
     """
     while True:
-        if len(call_queue) < 10:
+        if len(call_queue) < MAX_LEN:
             break
         else:
             oldest_call_time = call_queue[0]
             time_since_oldest = time.time() - oldest_call_time
-            if time_since_oldest >= 61:
+            if time_since_oldest >= 60:
                 call_queue.popleft()
                 break
             else:
-                wait_time = 61 - time_since_oldest
+                wait_time = 60 - time_since_oldest
                 print(f"Waiting for {wait_time:.2f} seconds to respect RPM limit.")
                 time.sleep(wait_time)
     start_time = time.time()
@@ -84,7 +86,7 @@ def main():
         print("No .txt files found in the specified folder.")
     else:
         # Initialize the call queue for rate limiting
-        call_queue = deque(maxlen=10)
+        call_queue = deque(maxlen=MAX_LEN)
         
         # Process each file
         for idx, (file_path, content) in enumerate(txt_files):
